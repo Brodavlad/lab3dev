@@ -68,9 +68,10 @@ Vagrant.configure("2") do |config|
   # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    yum install -y epel-release
-    yum install -y nginx
-    systemctl start nginx
-    systemctl enable nginx
+    config.vm.provision "shell", inline: <<-SHELL
+    cp /vagrant/mycron /etc/cron.d/
+    cp /vagrant/sysinfo.sh /root/
+    chmod +x /root/sysinfo.sh
+    systemctl restart cron
   SHELL
 end
